@@ -1,0 +1,289 @@
+<!-- templates/debtor.html -->
+{% extends "layout.html" %}
+
+{% block title %}Informações dos Usuários - Sistema Academia{% endblock %}
+
+{% block content %}
+<div class="debtor-container">
+    <div class="debtor-box">
+        <h2>📋 Informações dos Usuários</h2>
+
+        <!-- Tabela Simples -->
+        <div class="table-wrapper">
+            <table class="debtor-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Usuário</th>
+                        <th>Data</th>
+                        <th>Valor Pago</th>
+                        <th>Professor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for info in informacoes %}
+                    <tr>
+                        <td>{{ info.username }}</td>
+                        <td>{{ info.date }}</td>
+                        <td>R$ {{ "%.2f"|format(info.amount_paid) if info.amount_paid else '0.00' }}</td>
+                        <td>{{ info.coach or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="no-data">
+                            <div class="empty-message">
+                                <span>📭</span>
+                                <p>Nenhuma informação encontrada</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="action-buttons">
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">
+                <span class="btn-icon">+</span> Adicionar Novo Pagamento
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn-secondary">
+                ← Voltar para Início
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.debtor-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.debtor-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+}
+
+.debtor-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 28px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.debtor-box h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin: 30px 0;
+    border-radius: 8px;
+    border: 1px solid #e0e6ed;
+}
+
+.debtor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.debtor-table thead {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.debtor-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.debtor-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f3f4;
+    text-align: left;
+}
+
+.debtor-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.debtor-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.debtor-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px !important;
+    background: #f8f9fa;
+}
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.empty-message span {
+    font-size: 48px;
+    opacity: 0.5;
+}
+
+.empty-message p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 14px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .debtor-container {
+        padding: 10px;
+    }
+
+    .debtor-box {
+        padding: 25px 20px;
+        margin: 10px;
+    }
+
+    .debtor-box h2 {
+        font-size: 24px;
+    }
+
+    .debtor-table {
+        font-size: 14px;
+    }
+
+    .debtor-table th,
+    .debtor-table td {
+        padding: 12px 15px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.debtor-table tbody tr {
+    animation: fadeIn 0.3s ease forwards;
+    animation-delay: calc(var(--row-index) * 0.05s);
+}
+
+/* Alternar cores das linhas */
+.debtor-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.debtor-table tbody tr:nth-child(even):hover {
+    background-color: #f0f8ff;
+}
+</style>
+
+<script>
+// Adicionar índice para animação das linhas
+document.addEventListener('DOMContentLoaded', function() {
+    const rows = document.querySelectorAll('.debtor-table tbody tr');
+    rows.forEach((row, index) => {
+        row.style.setProperty('--row-index', index);
+    });
+
+    // Adicionar efeito de clique nas linhas
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            this.style.backgroundColor = '#e3f2fd';
+            setTimeout(() => {
+                this.style.backgroundColor = '';
+            }, 300);
+        });
+    });
+});
+</script>
+{% endblock %}

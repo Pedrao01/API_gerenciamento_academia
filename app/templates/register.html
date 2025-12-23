@@ -1,0 +1,147 @@
+<!-- templates/register.html -->
+<div class="register-container">
+    <h1>Cadastrar</h1>
+
+    <form method="POST" action="{{ url_for('auth.register') }}" class="register-form">
+        <!-- Nome -->
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="Seu nome completo"
+                   required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="seu@email.com"
+                   required>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Mínimo 6 caracteres"
+                   minlength="6"
+                   required>
+        </div>
+
+        <!-- Plano -->
+        <div class="form-group">
+            <label for="coach">Turno</label>
+            <select id="coach" name="coach" required class="form-select">
+                <option value="">Selecione o Turno</option>
+                <option value="jhonny">Manhã</option>
+                <option value="pedro">Tarde</option>
+                <option value="andrey">Noite</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="plano">Plano</label>
+            <select id="plano" name="plano" required class="form-select">
+                <option value="">Selecione o plano</option>
+                <option value="mensal">Mensal</option>
+                <option value="trimestral">Trimestral</option>
+                <option value="anual">Anual</option>
+            </select>
+        </div>
+
+        <div class="login-links">
+            <a href="{{ url_for('auth.login') }}">Já tem conta? Fazer login</a>
+        </div>
+
+        <!-- Botão -->
+        <div class="form-group">
+            <button type="submit" class="btn-submit">
+                Cadastrar
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .register-container {
+        max-width: 400px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .register-container h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .form-group input,
+    .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: white;
+    }
+
+    .form-group input:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: #4CAF50;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .btn-submit:hover {
+        background-color: #45a049;
+    }
+
+    .login-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    }
+
+    .login-links a {
+        display: block;
+        color: #007bff;
+        text-decoration: none;
+        margin: 8px 0;
+        transition: color 0.3s;
+    }
+
+    .login-links a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+</style>

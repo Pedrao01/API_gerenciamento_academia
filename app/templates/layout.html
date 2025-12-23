@@ -1,0 +1,53 @@
+<!-- templates/layout.html (ATUALIZADO com classes) -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema Academia{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="main-nav">
+        <div class="nav-container">
+
+            <a href="{{ url_for('auth.login') }}" class="nav-link">🔐 Login</a>
+            <a href="{{ url_for('auth.register') }}" class="nav-link">👤 Registrar-se</a>
+            <a href="{{ url_for('auth.register_payment') }}" class="nav-link">💵 Registra Pagamento</a>
+            <a href="{{ url_for('debtor.all_debtors') }}" class="nav-link">📋 Devedores</a>
+        </div>
+    </nav>
+
+    <!-- Mensagens flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+              {{ message }}
+              <span class="flash-close">×</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Fechar mensagens flash
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeButtons = document.querySelectorAll('.flash-close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

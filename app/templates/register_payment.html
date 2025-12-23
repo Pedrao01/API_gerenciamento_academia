@@ -1,0 +1,225 @@
+<!-- templates/register_payment.html -->
+{% extends "layout.html" %}
+
+{% block title %}Registro de Pagamento - Sistema Academia{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <h2>Registro de Pagamento</h2>
+        
+        <form method="POST" action="{{ url_for('auth.register') }}">
+            <div class="form-group">
+                <label for="username">Nome do Aluno:</label>
+                <input type="text" id="username" name="username" required 
+                       placeholder="Nome completo do aluno">
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Data do Pagamento:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="amount_paid">Valor Pago:</label>
+                <select id="amount_paid" name="amount_paid" required class="form-select">
+                    <option value="">Selecione o valor...</option>
+                    <option value="50">R$ 50,00</option>
+                    <option value="40">R$ 40,00</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="coach">Professor:</label>
+                <select id="coach" name="coach" required class="form-select">
+                    <option value="">Selecione o professor...</option>
+                <option value="Pedro">Pedro</option>
+                <option value="Andrey">Andrey</option>
+                <option value="Jhonny">Jhonny</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn-submit">Registrar Pagamento</button>
+            
+            <div class="form-links">
+                <a href="{{ url_for('debtor.all_debtors') }}">Ver lista de devedores</a>
+                <a href="{{ url_for('auth.login') }}">Voltar para início</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.form-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 28px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.form-box h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #34495e;
+    font-size: 15px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e6ed;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group input[type="date"] {
+    cursor: pointer;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 45px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 91, 187, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.form-links {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.form-links a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.form-links a:hover {
+    color: #0056b3;
+    background-color: rgba(0, 123, 255, 0.05);
+    text-decoration: none;
+    padding-left: 15px;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .form-box {
+        padding: 25px 20px;
+        margin: 10px;
+    }
+    
+    .form-box h2 {
+        font-size: 24px;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group select {
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+    
+    .btn-submit {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+/* Efeito de foco nos campos */
+.form-group input:not(:placeholder-shown),
+.form-group select:valid {
+    border-color: #28a745;
+}
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group select:invalid {
+    border-color: #dc3545;
+}
+</style>
+{% endblock %}
