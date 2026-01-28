@@ -1,7 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from .role import user_roles
-from flask import session, g
 
 
 class User(db.Model):
