@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Academia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+
+        .user-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-text h2 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .user-text p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .finance-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            color: #007bff;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+        }
+
+        .payment-status {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .payment-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .payment-due {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .action-btn:hover {
+            background: #0056b3;
+        }
+
+        .pay-btn {
+            background: #28a745;
+        }
+
+        .pay-btn:hover {
+            background: #218838;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Informações do Usuário -->
+    <div class="user-info">
+        <div class="user-header">
+            <div class="user-avatar">{{ g.user.username[0] }}</div>
+            <div class="user-text">
+                <h2>{{ g.user.username.capitalize() }}</h2>
+                <p>Matrícula: AC2024001</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-row">
+                <span class="info-label">Plano</span>
+                <span class="info-value">{{ g.user.gym_plan.capitalize() }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Válido até</span>
+                <span class="info-value">30/01/2024</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Personal</span>
+                <span class="info-value">{{ g.user.coach.capitalize() }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Frequência</span>
+                <span class="info-value">18 dias/mês</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Situação Financeira -->
+    <div class="finance-card">
+        <h2 class="card-title">💰 Situação Financeira</h2>
+
+        <div class="payment-status">
+            <div class="status-badge status-paid">PAGO</div>
+            <div class="payment-value">R$ 129,90</div>
+            <div class="payment-due">Próximo: 05/02/2024</div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-row">
+                <span class="info-label">Último pagamento</span>
+                <span class="info-value">05/01/2024</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Forma de pagamento</span>
+                <span class="info-value">Cartão **** 1234</span>
+            </div>
+        </div>
+
+        <button class="action-btn pay-btn" onclick="handlePayment()">💳 Fazer Pagamento</button>
+        <button class="action-btn" onclick="generateBillet()">📄 Gerar Boleto</button>
+    </div>
+
+    <!-- Botão Sair -->
+    <button class="action-btn logout-btn" onclick="location.href='{{ url_for('main.logout') }}'">
+    🚪 Sair da Conta
+    </button>
+
+    <script>
+        // Função para fazer pagamento
+        function handlePayment() {
+            alert('Redirecionando para página de pagamento...');
+            // Aqui normalmente você redirecionaria para a página de pagamento
+            // window.location.href = '/pagamento';
+        }
+
+        // Função para gerar boleto
+        function generateBillet() {
+            alert('Gerando boleto para impressão...');
+            // Aqui normalmente você geraria ou baixaria o boleto
+        }
+
+        // Função para sair da conta
+        function logout() {
+            if (confirm('Tem certeza que deseja sair da sua conta?')) {
+                alert('Saindo da conta...');
+                // Aqui normalmente você limparia a sessão e redirecionaria para o login
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
