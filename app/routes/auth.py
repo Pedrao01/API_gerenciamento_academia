@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for, flash, Blueprint
+from flask import request, render_template, redirect, url_for, flash, Blueprint, session
 # from app.models.payments import Payments
 from app import db
 from app.models.user import User
@@ -46,32 +46,37 @@ def login():
 
         user = User.query.filter((User.email == email)).first()
         if user.check_password(password):
+            session['user_id'] = user.id
             flash('logged with successfully!', 'success')
             return redirect(url_for('main.dashboard'))
+
+        flash('Error: incorrect password', 'error')
+        return render_template('login.html')
+
     return render_template('login.html')
 
 
-@auth_bp.route('/register_payment', methods=['GET', 'POST'])
-def register_payment():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        date = request.form.get('date')
-        amount_paid = request.form.get('amount_paid')
-        coach = request.form.get('coach')
-
-        if not username or not date or not amount_paid or not coach:
-            flash('All fields are mandatory', 'error')
-            return redirect(url_for('auth.register_payment'))
-
-        if Payments.query.filter((Payments.username == username)):
-            return render_template('error.html')
-
-        new_user = Payments(username=username, date=date, amount_paid=amount_paid, coach=coach)
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash('Gym member added with successfully!', 'success')
-        return redirect(url_for('auth.login'))
-
-    return render_template('register_payment.html')
+# @auth_bp.route('/register_payment', methods=['GET', 'POST'])
+# def register_payment():
+#     if request.method == 'POST':
+#         username = request.form.get('username')
+#         date = request.form.get('date')
+#         amount_paid = request.form.get('amount_paid')
+#         coach = request.form.get('coach')
+#
+#         if not username or not date or not amount_paid or not coach:
+#             flash('All fields are mandatory', 'error')
+#             return redirect(url_for('auth.register_payment'))
+#
+#         if Payments.query.filter((Payments.username == username)):
+#             return render_template('error.html')
+#
+#         new_user = Payments(username=username, date=date, amount_paid=amount_paid, coach=coach)
+#         db.session.add(new_user)
+#         db.session.commit()
+#
+#         flash('Gym member added with successfully!', 'success')
+#         return redirect(url_for('auth.login'))
+#
+#     return render_template('register_payment.html')
 
