@@ -1,10 +1,11 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash, session, g
-from app.auth.decorator import login_required
+from app.auth.decorator import login_required, role_required
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
 
 @main_bp.route('/dashboard', methods=['GET', 'POST'])
+@role_required('user')
 @login_required
 def dashboard():
     if request.method == 'POST':
