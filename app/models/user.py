@@ -1,5 +1,7 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from .role import user_roles
+from flask import session, g
 
 
 class User(db.Model):
@@ -12,6 +14,8 @@ class User(db.Model):
     coach = db.Column(db.String(80), nullable=True)
     gym_plan = db.Column(db.String(80), nullable=True)
 
+    roles = db.Relationship('Role', secondary=user_roles, backref='users')
+
     def __repr__(self):
         return f'<user={self.username}>'
 
@@ -20,3 +24,9 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def has_role(self, role_name):
+        return any(role.name == role_name for role in self.roles)
+
+    def has_any_role(self, *role_name):
+        return any(role.name in role_name for role in self.roles)
