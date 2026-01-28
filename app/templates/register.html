@@ -55,6 +55,19 @@
             </select>
         </div>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                            <span class="flash-close">❌</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <div class="login-links">
             <a href="{{ url_for('auth.login') }}">Já tem conta? Fazer login</a>
         </div>
